@@ -33,4 +33,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  {
+    title: 'Catalog',
+    icon: 'lock-outline',
+    children: [
+      {
+        title: 'Users',
+          link: '/pages/catalogue-management/users',
+      },
+      {
+        title: 'Devices',
+          link: '/pages/catalogue-management/devices',
+      },
+    ],
+  },
 ];

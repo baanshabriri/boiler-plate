@@ -12,6 +12,10 @@ import {
   NbSelectModule,
   NbIconModule,
   NbThemeModule,
+  NbDatepickerModule,
+  NbCheckboxModule,
+  NbListModule,
+  NbInputModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
@@ -39,6 +43,10 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
+import {NgbDropdownModule, NgbTabsetModule} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableComponent} from './components/data-table/data-table.component';
+import {TypeAheadComponent} from './components/type-ahead/type-ahead.component';
+import {FormsModule} from '@angular/forms';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -53,7 +61,14 @@ const NB_MODULES = [
   NbSelectModule,
   NbIconModule,
   NbEvaIconsModule,
+  NgbTabsetModule,
+  NgbDropdownModule,
+  NbDatepickerModule,
+  NbCheckboxModule,
+  NbListModule,
+  NbInputModule,
 ];
+
 const COMPONENTS = [
   SwitcherComponent,
   LayoutDirectionSwitcherComponent,
@@ -63,6 +78,8 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  DataTableComponent,
+  TypeAheadComponent
 ];
 const PIPES = [
   CapitalizePipe,
@@ -72,23 +89,29 @@ const PIPES = [
   NumberWithCommasPipe,
 ];
 
+const ANGULAR_MODULES = [
+  FormsModule,
+];
+
+
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES],
+  imports: [CommonModule, ...NB_MODULES, ...ANGULAR_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })
+
 export class ThemeModule {
   static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders>{
-      ngModule: ThemeModule,
-      providers: [
-        ...NbThemeModule.forRoot(
-          {
-            name: 'default',
-          },
-          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME ],
-        ).providers,
-      ],
-    };
+      return <ModuleWithProviders>{
+          ngModule: ThemeModule,
+          providers: [
+              ...NbThemeModule.forRoot(
+                  {
+                      name: 'default',
+                  },
+                  [DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME],
+              ).providers,
+          ],
+      };
   }
 }

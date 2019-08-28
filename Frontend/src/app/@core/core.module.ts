@@ -1,15 +1,14 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy, NbAuthJWTToken, NbPasswordAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy, NbAuthSimpleToken } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { AnalyticsService } from './utils';
-import { UserData } from './data/users';
-import { UserService } from './mock/users.service';
-import { MockDataModule } from './mock/mock-data.module';
 import { environment } from '../../environments/environment';
+import {ToastService} from './utils/toast.service';
+
 
 const socialLinks = [
   {
@@ -30,7 +29,6 @@ const socialLinks = [
 ];
 
 const DATA_SERVICES = [
-  { provide: UserData, useClass: UserService },
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
@@ -41,7 +39,6 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 }
 
 export const NB_CORE_PROVIDERS = [
-  ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
   ...NbAuthModule.forRoot({
 
@@ -55,7 +52,7 @@ export const NB_CORE_PROVIDERS = [
           method: 'post',
         },
         token: {
-          class: NbAuthJWTToken,
+          class: NbAuthSimpleToken,
           key: 'authentication_token',
         },
         logout: {
@@ -88,6 +85,7 @@ export const NB_CORE_PROVIDERS = [
     provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
   },
   AnalyticsService,
+  ToastService
 ];
 
 @NgModule({

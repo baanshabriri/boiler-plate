@@ -1,0 +1,58 @@
+<div class="row p-4">
+  <div class="col-8">
+
+      <nb-card>
+          <nb-card-header>Basic Details</nb-card-header>
+          <nb-card-body class="p-4">
+              <form #usersForm=ngForm class="form form-horizontal">
+                  <div class="row">
+                      <div class="col-6">
+                          <div class="form-group">
+                              <label>Name</label>
+                              <input #name=ngModel [(ngModel)]="user.name" fullWidth minlength="4" name="name"
+                                     nbInput required="true"
+                                     shape="rectangle" status="primary" type="text">
+
+                              <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="name.errors.required">
+                                      Name is required.
+                                  </div>
+                                  <div *ngIf="name.errors.minlength">
+                                      Name must be at least 4 characters long.
+                                  </div>
+
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- <div class="form-group">
+                      <label>Category</label>
+                      <ngx-type-ahead (send)="category.category = $event;category.category_id = $event.id"
+                                      [filters]="{__only: ['id', 'name'], __is_parent__bool: true}"
+                                      [model]="category.category" [required]="true" [url]="'category'">
+                      </ngx-type-ahead>
+
+
+                  </div> -->
+
+
+              </form>
+          </nb-card-body>
+
+          <nb-card-footer>
+              <div class="d-flex justify-content-end">
+                  <button (click)="cancel()" class="mr-5" nbButton status="danger">CANCEL</button>
+                  <button (click)="save()" [disabled]="usersForm.form.invalid" nbButton status="primary">SAVE
+                  </button>
+              </div>
+          </nb-card-footer>
+      </nb-card>
+
+
+  </div>
+
+</div>
