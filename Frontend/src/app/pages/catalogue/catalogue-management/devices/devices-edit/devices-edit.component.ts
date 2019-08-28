@@ -6,7 +6,7 @@ import {ToastService} from '../../../../../@core/utils/toast.service';
 import {Device} from '../../../../../@core/models/devices';
 
 @Component({
-  selector: 'devices-edit',
+  selector: 'ngx-devices-edit',
   templateUrl: './devices-edit.component.html',
   styleUrls: ['./devices-edit.component.scss']
 })
