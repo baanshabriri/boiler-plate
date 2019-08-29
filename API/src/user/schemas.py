@@ -1,5 +1,15 @@
 from src import ma, BaseSchema
-from .models import User, Role, UserRole
+from .models import User, Role, UserRole, Device, UserDevice
+
+class DeviceSchema(BaseSchema):
+    class Meta:
+        model = Device
+        exclude = ('updated_on', 'created_on')
+
+    id = ma.Integer(dump_only=True)
+    name = ma.String(Load=True)
+    users = ma.Nested('UserSchema', unique=True, dump_only=True, only=('id', 'name'))
+
 
 
 class UserSchema(BaseSchema):
@@ -12,6 +22,7 @@ class UserSchema(BaseSchema):
     # username = ma.String(required=True)
     first_name = ma.String(load=True)
     roles = ma.Nested('RoleSchema', many=True, dump_only=True, only=('id', 'name'))
+    devices = ma.Nested('DeviceSchema', many=True, dump_only=True, only=('id', 'name'))
     fixed_dues = ma.Integer(dump_only=True)
     subscriptions = ma.Integer(dump_only=True)
 
@@ -36,3 +47,15 @@ class UserRoleSchema(BaseSchema):
     role_id = ma.UUID(load=True)
     user = ma.Nested('UserSchema', many=False)
     role = ma.Nested('RoleSchema', many=False)
+
+
+class UserDeviceSchema(BaseSchema):
+    class Meta:
+        model = UserDevice
+        #exclude = ('created_on', 'updated_on')
+
+    id = ma.UUID(Load=True)
+    user_id = ma.UUID(Load=True)
+    device_id = ma.UUID(Load=True)
+    user = ma.Nested('UserSchema', many=False)
+    device = ma.Nested('DeviceSchema', many=False)

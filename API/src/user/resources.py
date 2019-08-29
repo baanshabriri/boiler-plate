@@ -3,8 +3,31 @@ from sqlalchemy import and_, or_
 
 from src.user.models import UserToUser
 from src.utils import ModelResource, operators as ops
-from .schemas import User, UserSchema
+from .schemas import User, UserSchema, DeviceSchema
+from .models import Device
 
+class DeviceResource(ModelResource):
+    model = Device
+    schema = DeviceSchema
+
+    auth_required = True
+
+    roles_accepted = ('admin', 'owner', 'staff')
+
+    optional = ()
+
+    exclude = ()
+
+    filters = {
+        'name': [ops.Equal, ops.Contains],
+        'active': [ops.Boolean],
+        'id': [ops.Equal],
+    }
+
+    related_resource ={}
+
+
+    order_by = ['id', 'name']
 
 class UserResource(ModelResource):
 

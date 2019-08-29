@@ -13,7 +13,7 @@ from src.user.schemas import UserSchema
 from src.utils.api import set_user
 from src.utils.methods import List, Fetch, Create, Update
 from .models import User, UserToUser
-from .resources import UserResource
+from .resources import UserResource, DeviceResource
 
 
 @api.register()
@@ -23,6 +23,15 @@ class UserView(BaseView):
     @classmethod
     def get_resource(cls):
         return UserResource
+
+
+@api.register()
+class DeviceView(BaseView):
+    api_methods = [List, Fetch, Create, Update]
+
+    @classmethod
+    def get_resource(cls):
+        return DeviceResource
 
 
 class UserLoginResource(Resource):

@@ -17,12 +17,30 @@ class UserRole(BaseMixin, db.Model):
     UniqueConstraint(user_id, role_id)
 
 
+class UserDevice(BaseMixin, db.Model):
+    user_id = db.Column(db.ForeignKey('user.id', ondelete='CASCADE'), index=True)
+    device_id = db.Column(db.ForeignKey('device.id', ondelete='CASCADE'), index=True)
+
+    user = db.relationship('User', foreign_keys=[user_id])
+    device = db.relationship('Device', foreign_keys=[device_id])
+
+    UniqueConstraint(user_id, device_id)
+
+
 class Role(BaseMixin, RoleMixin, ReprMixin, db.Model):
     name = db.Column(db.String(80), unique=True, index=True)
     description = db.Column(db.String(255))
     is_hidden = db.Column(db.Boolean(), default=False, index=True)
 
     users = db.relationship('User', back_populates='roles', secondary='user_role')
+
+
+class Device(BaseMixin, RoleMixin, ReprMixin, db.Model):
+
+    name = db.Column(db.String(80), unique=True, index=True)
+    active = db.Column(db.Boolean(), default=False, index=True)
+
+    users = db.relationship('User', back_populates='devices', secondary='user_device')
 
 
 class User(BaseMixin, ReprMixin, UserMixin, db.Model):
@@ -48,6 +66,8 @@ class User(BaseMixin, ReprMixin, UserMixin, db.Model):
     login_count = db.Column(db.Integer)
 
     roles = db.relationship('Role', back_populates='users', secondary='user_role')
+    devices = db.relationship('Device', back_populates='users', secondary='user_device')
+
 
     @hybrid_property
     def fixed_dues(self):
