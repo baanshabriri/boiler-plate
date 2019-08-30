@@ -12,7 +12,7 @@ from src import api
 from src.user.schemas import UserSchema
 from src.utils.api import set_user
 from src.utils.methods import List, Fetch, Create, Update
-from .models import User, UserToUser
+from .models import User
 from .resources import UserResource, DeviceResource
 
 
