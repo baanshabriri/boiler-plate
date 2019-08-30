@@ -10,11 +10,7 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
+
   url: "http://127.0.0.1:5000/api/v1/"
   //url: 'https://api.posify.in/api/v1/',
-=======
-  url: 'http://127.0.0.1:5000/api/v1/'
-  // url: 'https://api.posify.in/api/v1/',
->>>>>>> 79c9ef8ec7798899c42405ba40d7448bf9515116
 };

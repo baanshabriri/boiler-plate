@@ -8,22 +8,151 @@
                   <div class="row">
                       <div class="col-6">
                           <div class="form-group">
-                              <label>Name</label>
-                              <input #name=ngModel [(ngModel)]="device.name" fullWidth minlength="4" name="name"
+                              <label>Tracker Number</label>
+                              <input #tracker_number=ngModel [(ngModel)]="device.tracker_number" fullWidth minlength="10"
+                                     name="tracker_number"
+                                     nbInput required="true"
+                                     shape="rectangle" status="primary" type="number">
+
+                              <div *ngIf="tracker_number.invalid && (tracker_number.dirty || tracker_number.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="tracker_number.errors.required">
+                                      Tracker Number is required.
+                                  </div>
+                                  <div *ngIf="tracker_number.errors.minlength">
+                                      Name must be at least 4 characters long.
+                                  </div>
+                              </div>
+
+                              <label>Title</label>
+                              <input #title=ngModel [(ngModel)]="device.title" fullWidth minlength="5" name="title"
                                      nbInput required="true"
                                      shape="rectangle" status="primary" type="text">
 
-                              <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                              <div *ngIf="title.invalid && (title.dirty || title.touched)"
                                    class="alert alert-danger mt-3">
 
-                                  <div *ngIf="name.errors.required">
-                                      Name is required.
+                                  <div *ngIf="title.errors.required">
+                                      Title is required.
                                   </div>
-                                  <div *ngIf="name.errors.minlength">
-                                      Name must be at least 4 characters long.
+                                  <div *ngIf="title.errors.minlength">
+                                      Title must be at least 5 characters long.
                                   </div>
-
                               </div>
+
+                              <label>Tracker Owner</label>
+                              <input #tracker_owner=ngModel [(ngModel)]="device.tracker_owner" fullWidth minlength="4" 
+                                     name="tracker_owner" nbInput required="true"
+                                     shape="rectangle" status="primary" type="text">
+
+                              <div *ngIf="tracker_owner.invalid && (tracker_owner.dirty || tracker_owner.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="tracker_owner.errors.required">
+                                      Tracker Owner is required.
+                                  </div>
+                                  <div *ngIf="tracker_owner.errors.minlength">
+                                      Tracker Owner must be at least 4 characters long.
+                                  </div>
+                              </div>
+
+                              <label>Tracker Plan</label>
+                              <input #tracker_plan=ngModel [(ngModel)]="device.tracker_plan" fullWidth minlength="4" 
+                                     name="tracker_plan" nbInput required="true"
+                                     shape="rectangle" status="primary" type="text">
+
+                              <div *ngIf="tracker_plan.invalid && (tracker_plan.dirty || tracker_plan.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="tracker_plan.errors.required">
+                                      Tracker Plan is required.
+                                  </div>
+                                  <div *ngIf="tracker_plan.errors.minlength">
+                                      Tracker Plan must be valid.
+                                  </div>
+                              </div>
+
+                              <label>Tracker Activation Date</label>
+                              <input #activation_date=ngModel [(ngModel)]="device.activation_date" fullWidth minlength="4" 
+                                     name="activation_date" nbInput required="true"
+                                     shape="rectangle" status="primary" type="date">
+
+                              <div *ngIf="activation_date.invalid && (activation_date.dirty || activation_date.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="activation_date.errors.required">
+                                      Tracker Activation Date is required.
+                                  </div>
+                                  <div *ngIf="activation_date.errors.minlength">
+                                      Tracker Activation Date mus be valid.
+                                  </div>
+                              </div>
+
+                              <label>Model</label>
+                              <input #model=ngModel [(ngModel)]="device.model" fullWidth minlength="4" name="model"
+                                     nbInput required="true"
+                                     shape="rectangle" status="primary" type="text">
+
+                              <div *ngIf="model.invalid && (model.dirty || model.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="model.errors.required">
+                                      Model is required.
+                                  </div>
+                                  <div *ngIf="model.errors.minlength">
+                                      Model must be at least 4 characters long.
+                                  </div>
+                              </div>
+
+                              <label>Device ID</label>
+                              <input #device_id=ngModel [(ngModel)]="device.device_id" fullWidth minlength="4" name="device_id"
+                                     nbInput required="true"
+                                     shape="rectangle" status="primary" type="number">
+
+                              <div *ngIf="device_id.invalid && (device_id.dirty || device_id.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="device_id.errors.required">
+                                      Device ID is required.
+                                  </div>
+                                  <div *ngIf="device_id.errors.minlength">
+                                      Device ID must be at least 4 characters long.
+                                  </div>
+                              </div>
+
+                              <label>Hidden</label>
+                              <input #hidden=ngModel [(ngModel)]="device.hidden" fullWidth minlength="4"
+                                     nbInput required="true" name="hidden" 
+                                     shape="rectangle" status="primary" type="text">
+
+                              <div *ngIf="hidden.invalid && (hidden.dirty || hidden.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="hidden.errors.required">
+                                      Hidden is required.
+                                  </div>
+                                  <div *ngIf="hidden.errors.minlength">
+                                      Hidden must be at least 2 characters long.
+                                  </div>
+                              </div>
+
+                              <label>Service Suspended</label>
+                              <input #service_suspended=ngModel [(ngModel)]="device.service_suspended" fullWidth minlength="4" 
+                                     name="service_suspended" nbInput required="true"
+                                     shape="rectangle" status="primary" type="text">
+
+                              <div *ngIf="service_suspended.invalid && (service_suspended.dirty || service_suspended.touched)"
+                                   class="alert alert-danger mt-3">
+
+                                  <div *ngIf="service_suspended.errors.required">
+                                      Service Suspended is required.
+                                  </div>
+                                  <div *ngIf="service_suspended.errors.minlength">
+                                      Service Suspended must be valid.
+                                  </div>
+                              </div>
+
 
                           </div>
                       </div>

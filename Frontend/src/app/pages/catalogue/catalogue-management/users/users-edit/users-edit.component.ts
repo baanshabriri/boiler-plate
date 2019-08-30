@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DataService} from '../../../../../@core/utils/data.service';
 import {ToastService} from '../../../../../@core/utils/toast.service';
 import {User} from '../../../../../@core/models/users';
+import { DevicesComponent } from '../../devices/devices.component';
 
 @Component({
   selector: 'ngx-users-edit',
@@ -14,6 +15,17 @@ export class UsersEditComponent implements OnInit {
 
   id: number = null;
   user: User = <User>{};
+
+  columns = [
+      {
+          name: 'external_id',
+          displayName: 'ID',
+      },
+      {
+          name: 'name',
+          displayName: 'Name',
+      },
+  ];
 
   constructor(private activateRoute: ActivatedRoute, private http: DataService, private toaster: ToastService,
               private location: Location) {
