@@ -1,10 +1,9 @@
 from flask_security import current_user
-from sqlalchemy import and_, or_
 
-from src.user.models import UserToUser
 from src.utils import ModelResource, operators as ops
-from .schemas import User, UserSchema, DeviceSchema
 from .models import Device
+from .schemas import User, UserSchema, DeviceSchema
+
 
 class DeviceResource(ModelResource):
     model = Device
@@ -24,13 +23,12 @@ class DeviceResource(ModelResource):
         'id': [ops.Equal],
     }
 
-    related_resource ={}
-
+    related_resource = {}
 
     order_by = ['id', 'name']
 
-class UserResource(ModelResource):
 
+class UserResource(ModelResource):
     model = User
     schema = UserSchema
 
