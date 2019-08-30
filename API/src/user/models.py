@@ -46,7 +46,6 @@ class Device(BaseMixin, RoleMixin, ReprMixin, db.Model):
 class User(BaseMixin, ReprMixin, UserMixin, db.Model):
     __repr_fields__ = ['id', 'first_name']
 
-    razor_pay_id = db.Column(db.String(20), nullable=True, unique=True)
     email = db.Column(db.String(127), unique=True, nullable=True, index=True)
     password = db.Column(db.String(255), nullable=True)
     first_name = db.Column(db.String(55), nullable=False)
@@ -65,29 +64,24 @@ class User(BaseMixin, ReprMixin, UserMixin, db.Model):
     current_login_ip = db.Column(db.String(45))
     login_count = db.Column(db.Integer)
 
+    parent_id = db.Column(db.ForeignKey('user.id'), nullable=True)
+
+    parent = db.relationship('User', foreign_keys=[parent_id], uselist=False, remote_side='User.id')
+    children = db.relationship('User', remote_side='User.parent_id', lazy='dynamic',
+                               order_by="User.first_name", )
+
     roles = db.relationship('Role', back_populates='users', secondary='user_role')
     devices = db.relationship('Device', back_populates='users', secondary='user_device')
 
+    @hybrid_property
+    def get_children_list(self):
+        beginning_getter = User.query.with_entities(User.id) \
+            .filter(User.id == self.id).cte(name='children_for', recursive=True)
+        with_recursive = beginning_getter.union_all(
+            User.query.with_entities(User.id).filter(User.parent_id == beginning_getter.c.id)
+        )
+        return [i[0] for i in db.session.query(with_recursive).all()]
 
     @hybrid_property
-    def fixed_dues(self):
-        from src.dues.models import Due
-        return Due.query.with_entities(Due.amount)\
-            .filter(Due.is_paid.isnot(True), Due.creator.creator_id == current_user.id, Due.is_cancelled.isnot(True),
-                    Due.transaction_type == 'fixed',
-                    Due.customer_id == self.id).limit(1).scalar()
-
-    @hybrid_property
-    def subscriptions(self):
-        from src.dues.models import Due
-        return Due.query.with_entities(func.count(Due.id)) \
-            .filter(Due.creator_id == current_user.id, Due.is_cancelled.isnot(True),
-                    Due.transaction_type == 'subscription',
-                    Due.customer_id == self.id).limit(1).scalar()
-
-
-class UserToUser(BaseMixin, ReprMixin, db.Model):
-    business_owner_id = db.Column(db.ForeignKey('user.id'), nullable=False)
-    customer_id = db.Column(db.ForeignKey('user.id'), nullable=False)
-
-    UniqueConstraint(business_owner_id, customer_id)
+    def get_immediate_children_list(self):
+        return [i[0] for i in self.children.with_entities(User.id).all()]

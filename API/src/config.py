@@ -57,7 +57,7 @@ class DevConfig(BaseConfig):
     DEBUG = True
     TESTING = True
     #REDIS_URL = "redis://:@127.0.0.1:6379/0"
-    SQLALCHEMY_DATABASE_URI = "postgres://postgres:baandas123@localhost/roadcast"
+    SQLALCHEMY_DATABASE_URI = "postgres://postgres:@localhost/bolt2"
     #RATELIMIT_STORAGE_URL = "redis://:@127.0.0.1:6379/0"
     RAZOR_PAY_KEY = os.environ.get('DEV_RAZOR_PAY_KEY')
     RAZOR_PAY_SECRET = os.environ.get('DEV_RAZOR_PAY_SECRET')
