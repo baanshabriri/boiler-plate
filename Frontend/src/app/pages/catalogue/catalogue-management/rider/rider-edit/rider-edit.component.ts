@@ -3,18 +3,19 @@ import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {DataService} from '../../../../../@core/utils/data.service';
 import {ToastService} from '../../../../../@core/utils/toast.service';
-import {User} from '../../../../../@core/models/users';
+import {Rider} from '../../../../../@core/models/rider';
 import { DevicesComponent } from '../../devices/devices.component';
 
+
 @Component({
-  selector: 'ngx-users-edit',
-  templateUrl: './users-edit.component.html',
-  styleUrls: ['./users-edit.component.scss']
+  selector: 'ngx-rider-edit',
+  templateUrl: './rider-edit.component.html',
+  styleUrls: ['./rider-edit.component.scss']
 })
-export class UsersEditComponent implements OnInit {
+export class RiderEditComponent implements OnInit {
 
   id: number = null;
-  user: User = <User>{};
+  rider: Rider = <Rider>{};
 
   columns = [
       {
@@ -42,7 +43,7 @@ export class UsersEditComponent implements OnInit {
 
   async getCategory() {
       try {
-          this.user = await this.http.get(this.id, {__include: ['external_id']}, 'user');
+          this.rider = await this.http.get(this.id, {__include: ['external_id']}, 'rider');
       } catch (e) {
 
       }
@@ -55,9 +56,12 @@ export class UsersEditComponent implements OnInit {
   async save() {
 
       try {
-          this.toaster.showToast('Saved user successful', 'Success', false);
+          this.toaster.showToast('Saved rider successful', 'Success', false);
       } catch (e) {
-          this.toaster.showToast('Error saving user', 'Error', true, e);
+          this.toaster.showToast('Error saving rider', 'Error', true, e);
       }
   }
 }
+
+
+

@@ -17,6 +17,10 @@ export class CatalogueManagementComponent implements OnInit {
             title: 'Devices',
             route: './devices',
         },
+        {
+            title: 'Rider',
+            route: './rider',
+        }
     ];
 
     constructor() {

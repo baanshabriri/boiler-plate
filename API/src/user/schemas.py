@@ -1,5 +1,5 @@
 from src import ma, BaseSchema
-from .models import User, Role, UserRole, Device, UserDevice
+from .models import User, Role, UserRole, Device, UserDevice, Rider, RiderDevice
 
 class DeviceSchema(BaseSchema):
     class Meta:
@@ -9,7 +9,29 @@ class DeviceSchema(BaseSchema):
     id = ma.Integer(dump_only=True)
     name = ma.String(Load=True)
     users = ma.Nested('UserSchema', unique=True, dump_only=True, only=('id', 'name'))
+    riders = ma.Nested('RiderSchema', unique=True, dump_only=True, only=('id', 'name'))
 
+class RiderSchema(BaseSchema):
+    class Meta:
+        model = Rider
+        #exclude = ('updated_on')
+
+    id = ma.Integer(dump_only=True)
+    email = ma.Email(required=False)
+    first_name = ma.String(Load=True)
+    devices = ma.Nested('DeviceSchema', many=False, dump_only=True, only=('id', 'name'))
+    dues = ma.Integer(dump_only=True)
+
+
+class RiderDeviceScehma(BaseSchema):
+    class Meta:
+        model = RiderDevice
+        #exclude = ()
+    id = ma.UUID(Load=True)
+    rider_id = ma.UUID(Load=True)
+    device_id = ma.UUID(Load=True)
+    rider = ma.Nested('RiderSchema', many=False)
+    device = ma.Nested('DeviceSchema', many=False)
 
 
 class UserSchema(BaseSchema):

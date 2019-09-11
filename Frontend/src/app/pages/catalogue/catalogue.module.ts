@@ -9,9 +9,11 @@ import { UsersComponent } from './catalogue-management/users/users.component';
 import { UsersEditComponent } from './catalogue-management/users/users-edit/users-edit.component';
 import { DevicesComponent } from './catalogue-management/devices/devices.component';
 import { DevicesEditComponent } from './catalogue-management/devices/devices-edit/devices-edit.component';
+import { RiderComponent } from './catalogue-management/rider/rider.component';
+import { RiderEditComponent } from './catalogue-management/rider/rider-edit/rider-edit.component';
 
 @NgModule({
-    declarations: [CatalogueManagementComponent, UsersComponent, UsersEditComponent, DevicesComponent, DevicesEditComponent],
+    declarations: [CatalogueManagementComponent, UsersComponent, UsersEditComponent, DevicesComponent, DevicesEditComponent, RiderComponent, RiderEditComponent],
     imports: [
         ThemeModule,
         CatalogueRoutingModule,

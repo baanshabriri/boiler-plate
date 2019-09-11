@@ -41,6 +41,39 @@ class Device(BaseMixin, RoleMixin, ReprMixin, db.Model):
     active = db.Column(db.Boolean(), default=False, index=True)
 
     users = db.relationship('User', back_populates='devices', secondary='user_device')
+    riders = db.relationship('Rider', back_populates='devices', secondary='rider_device')
+
+
+class RiderDevice(BaseMixin, db.Model):
+    rider_id = db.Column(db.ForeignKey('rider.id', ondelete='CASCADE'), index=True)
+    device_id = db.Column(db.ForeignKey('device.id', ondelete='CASCADE'), index=True)
+
+    rider = db.relationship('Rider', foreign_keys=[rider_id])
+    device =db.relationship('Device', foreign_keys=[device_id])
+
+
+class Rider(BaseMixin, ReprMixin, UserMixin, db.Model):
+    __repr_fields__ = ['id', 'first_name']
+    email = db.Column(db.String(127), unique=True, nullable=True, index=True)
+    password = db.Column(db.String(255), nullable=True)
+    first_name = db.Column(db.String(55), nullable=False)
+    last_name = db.Column(db.String(55), nullable=True)
+    mobile_number = db.Column(db.String(20), unique=True, nullable=False, index=True)
+    company_name = db.Column(db.String(55), nullable=True)
+    counter = db.Column(db.Integer, nullable=True, default=0)
+
+    picture = db.Column(db.Text(), nullable=True, index=True)
+    active = db.Column(db.Boolean(), default=False)
+    confirmed_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    last_login_at = db.Column(db.DateTime())
+    current_login_at = db.Column(db.DateTime())
+
+    last_login_ip = db.Column(db.String(45))
+    current_login_ip = db.Column(db.String(45))
+    login_count = db.Column(db.Integer)
+
+
+    devices = db.relationship('Device', back_populates='riders', secondary='rider_device')
 
 
 class User(BaseMixin, ReprMixin, UserMixin, db.Model):

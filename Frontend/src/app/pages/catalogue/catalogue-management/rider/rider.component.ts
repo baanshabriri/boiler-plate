@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ngx-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'ngx-rider',
+  templateUrl: './rider.component.html',
+  styleUrls: ['./rider.component.scss']
 })
-export class UsersComponent implements OnInit {
-    
+export class RiderComponent implements OnInit {
+
     filters = [
-      {name: 'Disabled', value: '__is_disabled__bool'},
+      {first_name: 'Disabled', value: '__is_disabled__bool'},
     ];
   
     columns = [
@@ -29,4 +29,3 @@ export class UsersComponent implements OnInit {
     }
   
   }
-  

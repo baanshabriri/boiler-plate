@@ -23,6 +23,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Devices',
           link: '/pages/catalogue-management/devices',
       },
+      {
+        title: 'Rider',
+          link: '/pages/catalogue-management/rider',
+      },
+
     ],
   },
 ];
