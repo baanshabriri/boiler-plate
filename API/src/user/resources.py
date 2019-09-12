@@ -1,8 +1,59 @@
 from flask_security import current_user
 
 from src.utils import ModelResource, operators as ops
-from .models import Device, User, Rider
-from .schemas import User, UserSchema, DeviceSchema, RiderSchema
+from .models import Device, User, Rider, Group
+from .schemas import User, UserSchema, DeviceSchema, RiderSchema, GroupSchema
+
+class GroupResource(ModelResource):
+    model = Group
+    schema = GroupSchema
+
+    auth_required = True
+
+    roles_accepted = ('admin', 'owner', 'staff')
+
+    optional = ()
+
+    exclude = ()
+
+    filters = {
+        'name': [ops.Equal, ops.Contains],
+        #'active': [ops.Boolean],
+        'id': [ops.Equal],
+    }
+
+    related_resource = {
+
+    }
+
+    order_by = ['id', 'name']
+
+
+    def has_read_permission(self, qs):
+        return qs.filter(User.id == current_user.id)
+
+    def has_change_permission(self, obj):
+        if current_user.has_role('admin') or current_user.has_role('owner'):
+            if current_user.brand_id == obj.brand_id:
+                return True
+        elif current_user.has_role('staff'):
+            if current_user.id == obj.id:
+                return True
+        return False
+
+    def has_delete_permission(self, obj):
+        if current_user.has_role('admin') or current_user.has_role('owner'):
+            if current_user.brand_id == obj.brand_id:
+                return True
+        return False
+
+    def has_add_permission(self, obj):
+        if current_user.has_role('admin') or current_user.has_role('owner'):
+            if current_user.brand_id == obj.brand_id:
+                return True
+        return False
+
+
 
 
 class DeviceResource(ModelResource):
@@ -15,7 +66,7 @@ class DeviceResource(ModelResource):
 
     optional = ()
 
-    exclude = ()
+    exclude = ('updated_on', 'created_on')
 
     filters = {
         'name': [ops.Equal, ops.Contains],

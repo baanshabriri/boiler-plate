@@ -20,7 +20,11 @@ export class CatalogueManagementComponent implements OnInit {
         {
             title: 'Rider',
             route: './rider',
-        }
+        },
+        {
+            title: 'Groups',
+            route: './groups',
+        },
     ];
 
     constructor() {

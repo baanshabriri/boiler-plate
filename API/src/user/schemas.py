@@ -1,5 +1,30 @@
 from src import ma, BaseSchema
-from .models import User, Role, UserRole, Device, UserDevice, Rider, RiderDevice
+from .models import User, Role, UserRole, Device, UserDevice, Rider, RiderDevice, Group, DeviceGroup
+
+
+
+class GroupSchema(BaseSchema):
+    class Meta:
+        model=Group
+        #exclude=('updated_on', 'created_on')
+
+    id = ma.Integer(dump_only=True)
+    name = ma.String(Load=True)
+    devices = ma.Nested('DeviceSchema', unique=True, dump_only=True, only=('id','name'))
+
+
+class DeviceGroup(BaseSchema):
+    class Meta:
+        model=DeviceGroup
+        #exclude=('updated_on','created_on')
+    
+    id = ma.UUID(Load=True)
+    group_id = ma.UUID(Load=True)
+    device_id = ma.UUID(Load=True)
+    group = ma.Nested('GroupSchema', many=False)
+    device = ma.Nested('DeviceSchema', many=False)
+
+
 
 class DeviceSchema(BaseSchema):
     class Meta:
@@ -8,8 +33,12 @@ class DeviceSchema(BaseSchema):
 
     id = ma.Integer(dump_only=True)
     name = ma.String(Load=True)
-    users = ma.Nested('UserSchema', unique=True, dump_only=True, only=('id', 'name'))
-    riders = ma.Nested('RiderSchema', unique=True, dump_only=True, only=('id', 'name'))
+    users = ma.Nested('UserSchema', unique=True, dump_only=True, only=('id', 'first_name'))
+    riders = ma.Nested('RiderSchema', unique=True, dump_only=True, only=('id', 'first_name'))
+    groups = ma.Nested('GroupSchema', unique=True, dump_only=True, only=('id', 'name'))
+
+
+
 
 class RiderSchema(BaseSchema):
     class Meta:

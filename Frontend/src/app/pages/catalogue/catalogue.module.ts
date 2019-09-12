@@ -11,9 +11,11 @@ import { DevicesComponent } from './catalogue-management/devices/devices.compone
 import { DevicesEditComponent } from './catalogue-management/devices/devices-edit/devices-edit.component';
 import { RiderComponent } from './catalogue-management/rider/rider.component';
 import { RiderEditComponent } from './catalogue-management/rider/rider-edit/rider-edit.component';
+import { GroupsComponent } from './catalogue-management/groups/groups.component';
+import { GroupEditComponent } from './catalogue-management/groups/group-edit/group-edit.component';
 
 @NgModule({
-    declarations: [CatalogueManagementComponent, UsersComponent, UsersEditComponent, DevicesComponent, DevicesEditComponent, RiderComponent, RiderEditComponent],
+    declarations: [CatalogueManagementComponent, UsersComponent, UsersEditComponent, DevicesComponent, DevicesEditComponent, RiderComponent, RiderEditComponent, GroupsComponent, GroupEditComponent],
     imports: [
         ThemeModule,
         CatalogueRoutingModule,

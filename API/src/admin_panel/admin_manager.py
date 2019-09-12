@@ -4,7 +4,7 @@ from flask_security import current_user
 
 from src import admin, db
 
-from src.user.models import User, Device, UserDevice, Role, UserRole, Rider, RiderDevice
+from src.user.models import User, Device, UserDevice, Role, UserRole, Rider, RiderDevice, Group, DeviceGroup
 
 
 class MyModel(ModelView):
@@ -23,3 +23,5 @@ admin.add_view(MyModel(Device, session=db.session))
 admin.add_view(MyModel(UserDevice, session=db.session))
 admin.add_view(MyModel(Rider, session=db.session))
 admin.add_view(MyModel(RiderDevice, session=db.session))
+admin.add_view(MyModel(Group, session=db.session))
+admin.add_view(MyModel(DeviceGroup, session=db.session))

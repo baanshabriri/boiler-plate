@@ -35,6 +35,23 @@ class Role(BaseMixin, RoleMixin, ReprMixin, db.Model):
     users = db.relationship('User', back_populates='roles', secondary='user_role')
 
 
+class Group(BaseMixin, RoleMixin, ReprMixin, db.Model):
+    name = db.Column(db.String(80), unique=True, index=True)
+    description = db.Column(db.String(255))
+
+    devices = db.relationship('Device', back_populates='groups', secondary='device_group')
+
+
+class DeviceGroup(BaseMixin, ReprMixin, db.Model):
+    group_id = db.Column(db.ForeignKey('group.id', ondelete='CASCADE'), index=True)
+    device_id = db.Column(db.ForeignKey('device.id', ondelete='CASCADE'), index=True)
+
+    group = db.relationship('Group', foreign_keys=[group_id])
+    device = db.relationship('Device', foreign_keys=[device_id])
+
+    UniqueConstraint(group_id, device_id)
+
+
 class Device(BaseMixin, RoleMixin, ReprMixin, db.Model):
 
     name = db.Column(db.String(80), unique=True, index=True)
@@ -42,6 +59,7 @@ class Device(BaseMixin, RoleMixin, ReprMixin, db.Model):
 
     users = db.relationship('User', back_populates='devices', secondary='user_device')
     riders = db.relationship('Rider', back_populates='devices', secondary='rider_device')
+    groups = db.relationship('Group', back_populates='devices', secondary='device_group')
 
 
 class RiderDevice(BaseMixin, db.Model):
@@ -50,6 +68,8 @@ class RiderDevice(BaseMixin, db.Model):
 
     rider = db.relationship('Rider', foreign_keys=[rider_id])
     device =db.relationship('Device', foreign_keys=[device_id])
+
+    UniqueConstraint(rider_id, device_id)
 
 
 class Rider(BaseMixin, ReprMixin, UserMixin, db.Model):

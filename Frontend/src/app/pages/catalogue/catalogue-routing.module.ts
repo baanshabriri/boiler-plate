@@ -7,6 +7,8 @@ import { DevicesComponent } from './catalogue-management/devices/devices.compone
 import { DevicesEditComponent } from './catalogue-management/devices/devices-edit/devices-edit.component';
 import { RiderComponent } from './catalogue-management/rider/rider.component';
 import { RiderEditComponent } from './catalogue-management/rider/rider-edit/rider-edit.component';
+import { GroupsComponent } from './catalogue-management/groups/groups.component';
+import { GroupEditComponent } from './catalogue-management/groups/group-edit/group-edit.component';
 
 
 
@@ -39,6 +41,16 @@ const routes: Routes = [
                 path: 'rider/:id',
                 component: RiderEditComponent,
             },
+            {
+                path: 'groups',
+                component: GroupsComponent,
+            },
+            {
+                path: 'groups/:id',
+                component: GroupEditComponent,
+            },
+
+
         ],
     },
 ];

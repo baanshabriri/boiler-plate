@@ -27,6 +27,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Rider',
           link: '/pages/catalogue-management/rider',
       },
+      {
+        title: 'Group',
+          link: '/pages/catalogue-management/groups',
+      },
+
 
     ],
   },
