@@ -3,6 +3,6 @@
         [disableIcon]="true" [editIcon]="true" [editPath]="'/pages/catalogue-management/rider/'"
         [filters]="filters"
         [infoIcon]="false" [inputQuery]="{__include: ['external_id'],
-                 __only: ['id', 'first_name', 'is_disabled', 'external_id'], __is_disabled__bool: false, __has_parent__bool: false}"
+                 __only: ['id', 'first_name', 'mobile_number', 'email', 'last_name','devices','company_name', 'device_limit','is_disabled', 'external_id'], __is_disabled__bool: false, __has_parent__bool: false}"
         [path]="'rider'"
         [searchField]="'__first_name__contains'"></ngx-data-table>

@@ -185,3 +185,10 @@
   </div>
 
 </div>
+<ngx-data-table
+        [columns]="columns" [disableColumn]="'is_disabled'"
+        [disableIcon]="true" [editIcon]="true" [editPath]="'/pages/catalogue-management/groups/'"
+        [filters]="filters"
+        [infoIcon]="false" [inputQuery]="{__include: ['external_id', 'name', 'id'], __only: ['id', 'name']} "
+        [path]="'group'"
+        [searchField]="'__name__contains'"></ngx-data-table>

@@ -5,6 +5,7 @@ import {DataService} from '../../../../../@core/utils/data.service';
 import {ToastService} from '../../../../../@core/utils/toast.service';
 import {Group} from '../../../../../@core/models/groups';
 import { DevicesComponent } from '../../devices/devices.component';
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -19,7 +20,7 @@ export class GroupEditComponent implements OnInit {
 
 	columns = [
 	{
-		name: 'external_id',
+		name: 'id',
 		displayName: 'ID',
 	},
 	{
@@ -29,11 +30,11 @@ export class GroupEditComponent implements OnInit {
 	];
 
 	constructor(private activateRoute: ActivatedRoute, private http: DataService, private toaster: ToastService,
-				private location: Location){
+				private location: Location, private router: Router){
 		this.activateRoute.params.subscribe(res => {
 			if (res['id'] !== 'new'){
 				this.id = res['id'];
-				this.getCategory().then();
+				this.getGroup().then();
 			}
 
 		});
@@ -43,9 +44,9 @@ export class GroupEditComponent implements OnInit {
   ngOnInit() {
   }
 
-  async getCategory() {
+  async getGroup() {
       try {
-          this.group = await this.http.get(this.id, {__include: ['external_id']}, 'group');
+          this.group = await this.http.get(this.id, {__include: ['id']}, 'group');
       } catch (e) {
 
       }
@@ -56,12 +57,19 @@ export class GroupEditComponent implements OnInit {
   }
 
   async save() {
-
-      try {
-          this.toaster.showToast('Saved group successful', 'Success', false);
-      } catch (e) {
-          this.toaster.showToast('Error saving group', 'Error', true, e);
+    try {
+      if (this.id) {
+        await this.http.update(this.id, this.group, {}, 'group');
+      } else {
+        const res = await this.http.create(this.group, {__only: 'id'}, 'group');
+        this.id = res[0].id;
+        this.group.id = res[0].id;
+        await this.router.navigate(['/pages/catalogue/catalogue-management/group/' + this.id.toString(10)]);
       }
+      this.toaster.showToast('Saved group successful', 'Success', false);
+    } catch (e) {
+      this.toaster.showToast('Error saving group', 'Error', true, e);
+    }
   }
 }
 

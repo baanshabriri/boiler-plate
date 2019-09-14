@@ -1,8 +1,50 @@
 from flask_security import current_user
 
 from src.utils import ModelResource, operators as ops
-from .models import Device, User, Rider, Group
-from .schemas import User, UserSchema, DeviceSchema, RiderSchema, GroupSchema
+from .models import Device, User, Rider, Group, Role
+from .schemas import UserSchema, DeviceSchema, RiderSchema, GroupSchema, RoleSchema
+
+class RoleResource(ModelResource):
+    model = Role
+    schema = RoleSchema
+
+    auth_required = True
+
+    optional = ()
+
+
+    filters ={
+        'name': [ops.Equal, ops.Contains],
+        'id': [ops.Equal,ops.In],
+    }
+
+
+    related_resource={}
+
+    order_by = ['id', 'name']
+
+    export = True
+
+    default_limit = 25
+
+    max_export_limit = 5000
+
+    export_columns = ('name', 'description', 'users')
+
+    exclude = ('exteral_identity', 'description')
+
+    def has_read_permission(self, qs):
+        return qs
+
+    def has_change_permission(self, obj):
+        return True
+
+    def has_delete_permission(self, obj):
+        return True
+
+    def has_add_permission(self, objects):
+        return True
+
 
 class GroupResource(ModelResource):
     model = Group
@@ -14,7 +56,7 @@ class GroupResource(ModelResource):
 
     optional = ()
 
-    exclude = ()
+    exclude = ('updated_on', 'created_on')
 
     filters = {
         'name': [ops.Equal, ops.Contains],
@@ -23,19 +65,17 @@ class GroupResource(ModelResource):
     }
 
     related_resource = {
-
     }
 
     order_by = ['id', 'name']
 
 
     def has_read_permission(self, qs):
-        return qs.filter(User.id == current_user.id)
+        return qs
 
     def has_change_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         elif current_user.has_role('staff'):
             if current_user.id == obj.id:
                 return True
@@ -43,14 +83,12 @@ class GroupResource(ModelResource):
 
     def has_delete_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         return False
 
     def has_add_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         return False
 
 
@@ -82,12 +120,11 @@ class DeviceResource(ModelResource):
 
 
     def has_read_permission(self, qs):
-        return qs.filter(Device.id == current_user.id)
+        return qs
 
     def has_change_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         elif current_user.has_role('staff'):
             if current_user.id == obj.id:
                 return True
@@ -95,8 +132,7 @@ class DeviceResource(ModelResource):
 
     def has_delete_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         return False
 
     def has_add_permission(self, obj):
@@ -121,7 +157,7 @@ class RiderResource(ModelResource):
 
     filters = {
 #       'username': [ops.Equal, ops.Contains],
-        'name': [ops.Equal, ops.Contains],
+#        'name': [ops.Equal, ops.Contains],
         'active': [ops.Boolean],
         'id': [ops.Equal],
         'first_name': [ops.Equal, ops.StartsWith],
@@ -138,12 +174,11 @@ class RiderResource(ModelResource):
 
 
     def has_read_permission(self, qs):
-        return qs.filter(Rider.id == current_user.id)
+        return qs
 
     def has_change_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         elif current_user.has_role('staff'):
             if current_user.id == obj.id:
                 return True
@@ -151,14 +186,12 @@ class RiderResource(ModelResource):
 
     def has_delete_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         return False
 
     def has_add_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         return False
 
 
@@ -181,8 +214,13 @@ class UserResource(ModelResource):
         'active': [ops.Boolean],
         'id': [ops.Equal],
         'first_name': [ops.Equal, ops.StartsWith],
+        'created_on': [ops.DateGreaterEqual, ops.Contains],
+        'active': [ops.Boolean],
+
 
     }
+
+    export_columns = ('id', 'name', 'mobile_number', 'email')
 
     related_resource = {
 
@@ -193,12 +231,11 @@ class UserResource(ModelResource):
     only = ()
 
     def has_read_permission(self, qs):
-        return qs.filter(User.id == current_user.id)
+        return qs
 
     def has_change_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         elif current_user.has_role('staff'):
             if current_user.id == obj.id:
                 return True
@@ -206,12 +243,10 @@ class UserResource(ModelResource):
 
     def has_delete_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         return False
 
     def has_add_permission(self, obj):
         if current_user.has_role('admin') or current_user.has_role('owner'):
-            if current_user.brand_id == obj.brand_id:
-                return True
+            return True
         return False

@@ -13,7 +13,7 @@ export class GroupsComponent implements OnInit {
   
     columns = [
         {
-            name: 'external_id',
+            name: 'id',
             displayName: 'ID',
         },
         {

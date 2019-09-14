@@ -2,7 +2,7 @@
         [columns]="columns" [disableColumn]="'is_disabled'"
         [disableIcon]="true" [editIcon]="true" [editPath]="'/pages/catalogue-management/users/'"
         [filters]="filters"
-        [infoIcon]="false" [inputQuery]="{__include: ['external_id'],
-                 __only: ['id', 'name', 'is_disabled', 'external_id'], __is_disabled__bool: false, __has_parent__bool: false}"
+        [infoIcon]="false" [inputQuery]="{__include: ['external_id', 'mobile_number'],
+                 __only: ['id', 'first_name', 'last_name','is_disabled', 'mobile_number', 'email', 'external_id'], __is_disabled__bool: false, __has_parent__bool: false}"
         [path]="'user'"
-        [searchField]="'__name__contains'"></ngx-data-table>
+        [searchField]="'__first_name__contains'"></ngx-data-table>

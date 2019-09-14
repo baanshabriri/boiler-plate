@@ -4,7 +4,7 @@
       <nb-card>
           <nb-card-header>Basic Details</nb-card-header>
           <nb-card-body class="p-4">
-              <form #groupsForm=ngForm class="form form-horizontal">
+              <form #groupForm=ngForm class="form form-horizontal">
                   <div class="row">
                       <div class="col-6">
                           <div class="form-group">
@@ -46,7 +46,7 @@
           <nb-card-footer>
               <div class="d-flex justify-content-end">
                   <button (click)="cancel()" class="mr-5" nbButton status="danger">CANCEL</button>
-                  <button (click)="save()" [disabled]="groupsForm.form.invalid" nbButton status="primary">SAVE
+                  <button (click)="save()" [disabled]="groupForm.form.invalid" nbButton status="primary">SAVE
                   </button>
               </div>
           </nb-card-footer>

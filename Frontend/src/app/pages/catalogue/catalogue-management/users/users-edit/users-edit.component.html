@@ -4,24 +4,24 @@
       <nb-card>
           <nb-card-header>Basic Details</nb-card-header>
           <nb-card-body class="p-4">
-              <form #usersForm=ngForm class="form form-horizontal">
+              <form #userForm=ngForm class="form form-horizontal">
                   <div class="row">
                       <div class="col-6">
                           <div class="form-group">
 
-                              <label>Name</label>
-                              <input #name=ngModel [(ngModel)]="user.name" fullWidth minlength="4" name="name"
+                              <label>First Name</label>
+                              <input #first_name=ngModel [(ngModel)]="user.first_name" fullWidth minlength="4" name="first_name"
                                      nbInput required="true"
                                      shape="rectangle" status="primary" type="text">
 
-                              <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                              <div *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)"
                                    class="alert alert-danger mt-3">
 
-                                  <div *ngIf="name.errors.required">
-                                      Name is required.
+                                  <div *ngIf="first_name.errors.required">
+                                      First Name is required.
                                   </div>
-                                  <div *ngIf="name.errors.minlength">
-                                      Name must be at least 4 characters long.
+                                  <div *ngIf="first_name.errors.minlength">
+                                      First Name must be at least 4 characters long.
                                   </div>
 
                               </div>
@@ -43,121 +43,21 @@
 
                               </div>
 
-                              <label>Status</label>
-                              <input  #status=ngModel [(ngModel)]="user.status" fullWidth minlength="4" name="status"
+
+                              <label>Last Name</label>
+                              <input #last_name=ngModel [(ngModel)]="user.last_name" fullWidth minlength="4" name="last_name"
                                       nbInput required="true"
                                       shape="rectangle" status="primary" type="text">
 
-                              <div *ngIf="status.invalid && (status.dirty || status.touched)"
+                              <div *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)"
                                    class="alert alert-danger mt-3">
 
-                                  <div *ngIf="status.errors.required">
-                                      Status is required.
+                                  <div *ngIf="last_name.errors.required">
+                                      Last Name is required.
                                   </div>
-                                  <div *ngIf="status.errors.minlength">
-                                      Status must be at least 4 characters long.
+                                  <div *ngIf="last_name.errors.minlength">
+                                      Last Name must be at least 4 characters long.
                                   </div>
-
-                              </div>
-
-                              <label>Balance</label>
-                              <input #balance=ngModel [(ngModel)]="user.balance" fullWidth minlength="4" name="balance"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="number">
-                              
-                              <div *ngIf="balance.invalid && (balance.dirty || balance.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="balance.errors.required">
-                                      Balance is required.
-                                  </div>
-                                  <div *ngIf="balance.errors.minlength">
-                                      Balance must be at least 4 characters long.
-                                  </div>
-                               </div>
-                                  
-                              <label>Bonus</label>
-                              <input #bonus=ngModel [(ngModel)]="user.bonus" fullWidth minlength="4" name="bonus"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="number">
-                              
-                              <div *ngIf="bonus.invalid && (bonus.dirty || bonus.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="bonus.errors.required">
-                                      Bonus is required.
-                                  </div>
-                                  <div *ngIf="bonus.errors.minlength">
-                                      Bonus must be at least 4 characters long.
-                                  </div>
-                              </div>
-
-                              <label>City</label>
-                              <input #city=ngModel [(ngModel)]="user.city" fullWidth minlength="4" name="city"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="text">
-
-                              <div *ngIf="city.invalid && (city.dirty || city.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="city.errors.required">
-                                      City is required.
-                                  </div>
-                                  <div *ngIf="city.errors.minlength">
-                                      City must be at least 4 characters long.
-                                  </div>
-                              </div>
-                              
-
-                              <label>Registration City</label>
-                              <input #reg_city=ngModel [(ngModel)]="user.reg_city" fullWidth minlength="4" name="registration_city"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="text">
-
-                              <div *ngIf="reg_city.invalid && (reg_city.dirty || reg_city.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="reg_city.errors.required">
-                                      Registration City is required.
-                                  </div>
-                                  <div *ngIf="reg_city.errors.minlength">
-                                      Registration City must be at least 4 characters long.
-                                  </div>
-                              </div>
-
-                              <label>Legal Status</label>
-                              <input #legal_status=ngModel [(ngModel)]="user.legal_status" fullWidth minlength="4" name="legal_status"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="text">
-
-                              <div *ngIf="legal_status.invalid && (legal_status.dirty || legal_status.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="legal_status.errors.required">
-                                      What is your legal status?
-                                  </div>
-                                  <div *ngIf="legal_status.errors.minlength">
-                                      Status must be at least 4 characters long.
-                                  </div>
-
-                              </div>
-
-
-                              <label>Date of Registration</label>
-                              <input #reg_date=ngModel [(ngModel)]="user.reg_date" fullWidth minlength="4" name="registration_date"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="date">
-
-                              <div *ngIf="reg_date.invalid && (reg_date.dirty || reg_date.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="reg_date.errors.required">
-                                      Status is required.
-                                  </div>
-                                  <div *ngIf="reg_date.errors.minlength">
-                                      Status must be at least 4 characters long.
-                                  </div>
-
                               </div>
 
                               <label>Devices</label>
@@ -169,74 +69,37 @@
                                    class="alert alert-danger mt-3">
 
                                   <div *ngIf="devices.errors.required">
-                                      Status is required.
+                                      Device is required.
                                   </div>
                                   <div *ngIf="devices.errors.minlength">
-                                      Status must be at least 4 characters long.
+                                      Device must be at least 4 characters long.
                                   </div>
 
                               </div>
 
 
                               <label>Phone Number</label>
-                              <input #phone_number=ngModel [(ngModel)]="user.phone_number" 
-                                      fullWidth minlength="10" name="phone_number"
+                              <input #mobile_number=ngModel [(ngModel)]="user.mobile_number" 
+                                      fullWidth minlength="10" name="mobile_number"
                                       nbInput required="true"
                                       shape="rectangle" status="primary" type="phone">
 
-                              <div *ngIf="phone_number.invalid && (phone_number.dirty || phone_number.touched)"
+                              <div *ngIf="mobile_number.invalid && (mobile_number.dirty || mobile_number.touched)"
                                    class="alert alert-danger mt-3">
 
-                                  <div *ngIf="phone_number.errors.required">
+                                  <div *ngIf="mobile_number.errors.required">
                                       Status is required.
                                   </div>
-                                  <div *ngIf="phone_number.errors.minlength">
+                                  <div *ngIf="mobile_number.errors.minlength">
                                       Status must be at least 4 characters long.
                                   </div>
 
                               </div>
 
-
-                              <label>Discount</label>
-                              <input #discount=ngModel [(ngModel)]="user.discount" fullWidth minlength="4" name="discount"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="number">
-
-                              <div *ngIf="discount.invalid && (discount.dirty || status.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="discount.errors.required">
-                                      Discount is required.
-                                  </div>
-                                  <div *ngIf="discount.errors.minlength">
-                                      Discount must be a valid amount.
-                                  </div>
-
-                              </div>
-                              
-
-                              <label>End Date</label>
-                              <input #end_date=ngModel [(ngModel)]="user.end_date" fullWidth minlength="4" name="end_date"
-                                      nbInput required="true"
-                                      shape="rectangle" status="primary" type="date">
-
-                              <div *ngIf="end_date.invalid && (end_date.dirty || end_date.touched)"
-                                   class="alert alert-danger mt-3">
-
-                                  <div *ngIf="end_date.errors.required">
-                                      End Date is required.
-                                  </div>
-                                  <div *ngIf="end_date.errors.minlength">
-                                      End date must be valid
-                                  </div>
-
-                              </div>
-                              
-
                               <label>Device Limit</label>
                               <input #device_limit=ngModel [(ngModel)]="user.device_limit" fullWidth minlength="2" name="device_limit"
                                       nbInput required="true"
-                                      shape="rectangle" status="primary" type="text">
+                                      shape="rectangle" status="primary" type="number">
 
                               <div *ngIf="device_limit.invalid && (device_limit.dirty || device_limit.touched)"
                                    class="alert alert-danger mt-3">
@@ -271,7 +134,7 @@
           <nb-card-footer>
               <div class="d-flex justify-content-end">
                   <button (click)="cancel()" class="mr-5" nbButton status="danger">CANCEL</button>
-                  <button (click)="save()" [disabled]="usersForm.form.invalid" nbButton status="primary">SAVE
+                  <button (click)="save()" [disabled]="userForm.form.invalid" nbButton status="primary">SAVE
                   </button>
               </div>
           </nb-card-footer>

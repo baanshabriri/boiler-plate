@@ -2,7 +2,6 @@
         [columns]="columns" [disableColumn]="'is_disabled'"
         [disableIcon]="true" [editIcon]="true" [editPath]="'/pages/catalogue-management/groups/'"
         [filters]="filters"
-        [infoIcon]="false" [inputQuery]="{__include: ['external_id'],
-                 __only: ['id', 'name', 'is_disabled', 'external_id'], __is_disabled__bool: false, __has_parent__bool: false}"
+        [infoIcon]="false" [inputQuery]="{__include: [], __only: ['id', 'name']} "
         [path]="'group'"
         [searchField]="'__name__contains'"></ngx-data-table>

@@ -5,6 +5,7 @@ import {DataService} from '../../../../../@core/utils/data.service';
 import {ToastService} from '../../../../../@core/utils/toast.service';
 import {User} from '../../../../../@core/models/users';
 import { DevicesComponent } from '../../devices/devices.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ngx-users-edit',
@@ -15,30 +16,47 @@ export class UsersEditComponent implements OnInit {
 
   id: number = null;
   user: User = <User>{};
+  password: string = undefined;
+  roles$: Promise<any>;
 
   columns = [
       {
-          name: 'external_id',
+          name: 'id',
           displayName: 'ID',
       },
       {
-          name: 'first_name',
+          name: 'name',
           displayName: 'Name',
       },
   ];
 
   constructor(private activateRoute: ActivatedRoute, private http: DataService, private toaster: ToastService,
-              private location: Location) {
+              private location: Location, private router: Router) {
       this.activateRoute.params.subscribe(res => {
           if (res['id'] !== 'new') {
-              this.id = res['id'];
-              this.getCategory().then();
+              this.id = parseInt(res['id'], 10);
+              this.getUser().then();
           }
       });
   }
 
   ngOnInit() {
+    this.getRoles();
   }
+
+  getRoles(){
+    this.roles$ = this.http.query({}, 'role');
+  }
+
+  async getUser() {
+    try {
+      this.user = await this.http.get(this.id, {__include: ['mobile_number', 'email', 'id']}, 'user');
+    } catch (e) {
+
+    }
+  }
+ 
+
 
   async getCategory() {
       try {
@@ -52,12 +70,25 @@ export class UsersEditComponent implements OnInit {
       this.location.back();
   }
 
-  async save() {
 
-      try {
-          this.toaster.showToast('Saved user successful', 'Success', false);
-      } catch (e) {
-          this.toaster.showToast('Error saving user', 'Error', true, e);
+
+  async save() {
+    if (this.password) {
+      this.user.password = this.password;
+    }
+    try {
+      if (this.id) {
+        await this.http.update(this.id, this.user, {}, 'user');
+      } else {
+        const res = await this.http.create(this.user, {__only: 'id'}, 'user');
+        this.id = res[0].id;
+        this.user.id = res[0].id;
+        await this.router.navigate(['/pages/catalogue/catalogue-management/user/' + this.id.toString(10)]);
       }
+      this.toaster.showToast('Saved user successful', 'Success', false);
+    } catch (e) {
+      this.toaster.showToast('Error saving user', 'Error', true, e);
+    }
+
   }
 }

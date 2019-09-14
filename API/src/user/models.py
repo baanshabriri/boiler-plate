@@ -28,9 +28,10 @@ class UserDevice(BaseMixin, db.Model):
 
 
 class Role(BaseMixin, RoleMixin, ReprMixin, db.Model):
-    name = db.Column(db.String(80), unique=True, index=True)
+    name = db.Column(db.String(80), unique=False)
+    level = db.Column(db.SmallInteger(), default=0, nullable=True)
+    external_identity = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
-    is_hidden = db.Column(db.Boolean(), default=False, index=True)
 
     users = db.relationship('User', back_populates='roles', secondary='user_role')
 
@@ -82,6 +83,7 @@ class Rider(BaseMixin, ReprMixin, UserMixin, db.Model):
     company_name = db.Column(db.String(55), nullable=True)
     counter = db.Column(db.Integer, nullable=True, default=0)
 
+
     picture = db.Column(db.Text(), nullable=True, index=True)
     active = db.Column(db.Boolean(), default=False)
     confirmed_at = db.Column(db.DateTime(), default=datetime.utcnow)
@@ -92,7 +94,7 @@ class Rider(BaseMixin, ReprMixin, UserMixin, db.Model):
     current_login_ip = db.Column(db.String(45))
     login_count = db.Column(db.Integer)
 
-
+    device_limit = db.Column(db.Integer, nullable=True, default=0)
     devices = db.relationship('Device', back_populates='riders', secondary='rider_device')
 
 
@@ -107,7 +109,7 @@ class User(BaseMixin, ReprMixin, UserMixin, db.Model):
     business_name = db.Column(db.String(55), nullable=True)
     counter = db.Column(db.Integer, nullable=True, default=0)
 
-    picture = db.Column(db.Text(), nullable=True, index=True)
+    #picture = db.Column(db.Text(), nullable=True, index=True)
     active = db.Column(db.Boolean(), default=False)
     confirmed_at = db.Column(db.DateTime(), default=datetime.utcnow)
     last_login_at = db.Column(db.DateTime())

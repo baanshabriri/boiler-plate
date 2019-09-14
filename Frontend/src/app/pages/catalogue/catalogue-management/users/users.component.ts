@@ -11,16 +11,31 @@ export class UsersComponent implements OnInit {
       {name: 'Disabled', value: '__is_disabled__bool'},
     ];
   
-    columns = [
-        {
-            name: 'external_id',
-            displayName: 'ID',
-        },
-        {
-            name: 'first_name',
-            displayName: 'Name',
-        },
+    columns =
+    [
+      {
+        name:'id',
+        displayName:'ID'
+      },
+      {
+        name: 'first_name',
+        displayName: 'Users',
+      },
+      {
+        name: 'mobile_number',
+        displayName: 'Mobile No.',
+      },
+      {
+        name: 'email',
+        displayName: 'Email',
+      },
+      {
+        name: 'role',
+        displayName: 'Access Level',
+        displayFn: (r => r.role ? r.role.external_identity : ''),
+      },
     ];
+
   
     constructor() {
     }

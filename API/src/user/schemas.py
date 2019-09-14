@@ -2,18 +2,17 @@ from src import ma, BaseSchema
 from .models import User, Role, UserRole, Device, UserDevice, Rider, RiderDevice, Group, DeviceGroup
 
 
-
 class GroupSchema(BaseSchema):
     class Meta:
         model=Group
-        #exclude=('updated_on', 'created_on')
+        exclude=('updated_on', 'created_on')
 
     id = ma.Integer(dump_only=True)
     name = ma.String(Load=True)
     devices = ma.Nested('DeviceSchema', unique=True, dump_only=True, only=('id','name'))
 
 
-class DeviceGroup(BaseSchema):
+class DeviceGroupSchema(BaseSchema):
     class Meta:
         model=DeviceGroup
         #exclude=('updated_on','created_on')
@@ -48,8 +47,11 @@ class RiderSchema(BaseSchema):
     id = ma.Integer(dump_only=True)
     email = ma.Email(required=False)
     first_name = ma.String(Load=True)
+    last_name = ma.String(Load=True)
+    mobile_number = ma.Integer(Load=True)
+    device_limit = ma.Integer(Load=True)
     devices = ma.Nested('DeviceSchema', many=False, dump_only=True, only=('id', 'name'))
-    dues = ma.Integer(dump_only=True)
+
 
 
 class RiderDeviceScehma(BaseSchema):
@@ -70,6 +72,7 @@ class UserSchema(BaseSchema):
 
     id = ma.Integer(dump_only=True)
     email = ma.Email(required=False)
+    mobile_number = ma.Integer(Load=True, allow_none=False)
     # username = ma.String(required=True)
     first_name = ma.String(load=True)
     roles = ma.Nested('RoleSchema', many=True, dump_only=True, only=('id', 'name'))
@@ -85,7 +88,10 @@ class RoleSchema(BaseSchema):
 
     id = ma.UUID()
     name = ma.String()
+    level = ma.UUID(Load=True)
     permissions = ma.Nested('PermissionSchema', many=True, dump_only=True, only=('id', 'name'))
+    users = ma.Nested('UserSchema', many=True, dump_only=True, only=('id', 'name'))
+    #riders = ma.Nested('RiderSchema', many=True, dump_only=True, only=('id', 'name'))
 
 
 class UserRoleSchema(BaseSchema):

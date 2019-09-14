@@ -13,13 +13,22 @@ export class RiderComponent implements OnInit {
   
     columns = [
         {
-            name: 'external_id',
+            name: 'id',
             displayName: 'ID',
         },
         {
             name: 'first_name',
-            displayName: 'Name',
+            displayName: 'First Name',
         },
+        {
+            name: 'last_name',
+            displayName: 'Last Name',
+        },
+        {
+            name: 'mobile_number',
+            displayName: 'Phone',
+        },
+
     ];
   
     constructor() {
